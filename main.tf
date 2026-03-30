@@ -13,19 +13,19 @@ provider "azurerm" {
 }
 
 # Generate a random integer to create a globally unique name
-resource "random_integer" "random" {
-  min = 10000
-  max = 99999
-}
+# resource "random_integer" "random" {
+#   min = 10000
+#   max = 99999
+# }
 
 
 resource "azurerm_resource_group" "azureregistry" {
-  name     = "${var.resource_group_name}-${random_integer.random.result}"
+  name     = "var.resource_group_name"
   location = var.location
 }
 
 resource "azurerm_service_plan" "azureapp_service" {
-  name                = "${var.app_service_plan_name}-${random_integer.random.result}"
+  name                = "var.app_service_plan_name"
   location            = azurerm_resource_group.azureregistry.location
   resource_group_name = azurerm_resource_group.azureregistry.name
   os_type             = "Linux"
@@ -34,7 +34,7 @@ resource "azurerm_service_plan" "azureapp_service" {
 
 # Create the web app, pass in the App Service Plan ID
 resource "azurerm_linux_web_app" "azurewebapp" {
-  name                = "${var.app_service_name}-${random_integer.random.result}"
+  name                = "var.app_service_name"
   location            = azurerm_resource_group.azureregistry.location
   resource_group_name = azurerm_resource_group.azureregistry.name
   service_plan_id     = azurerm_service_plan.azureapp_service.id
@@ -53,7 +53,7 @@ resource "azurerm_linux_web_app" "azurewebapp" {
 
 
 resource "azurerm_mssql_server" "sqlserver" {
-  name                         = "${var.sql_server_name}-${random_integer.random.result}"
+  name                         = "var.sql_server_name"
   resource_group_name          = azurerm_resource_group.azureregistry.name
   location                     = azurerm_resource_group.azureregistry.location
   version                      = "12.0"
@@ -84,9 +84,9 @@ resource "azurerm_mssql_firewall_rule" "firewall_rule" {
 }
 
 
-# # Deploy code from a public GitHub repository
-# resource "azurerm_app_service_source_control" "azurewebappsourcecontrol" {
-#   app_id   = azurerm_linux_web_app.azurewebapp.id
-#   branch   = "main"
-#   repo_url = var.github_repo_url
-# }
+# Deploy code from a public GitHub repository
+resource "azurerm_app_service_source_control" "azurewebappsourcecontrol" {
+  app_id   = azurerm_linux_web_app.azurewebapp.id
+  branch   = "main"
+  repo_url = var.github_repo_url
+}

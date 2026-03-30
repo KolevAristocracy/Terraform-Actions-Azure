@@ -28,6 +28,7 @@ jobs:
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
       uses: actions/checkout@v4
+      
 
     - name: Azure Login
       uses: azure/login@v1
@@ -63,7 +64,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+        with:
+          repository: KolevAristocracy/TaskBoardTerraform2026
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
   

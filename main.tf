@@ -84,9 +84,9 @@ resource "azurerm_mssql_firewall_rule" "firewall_rule" {
 }
 
 
-# Deploy code from a public GitHub repository
-resource "azurerm_app_service_source_control" "azurewebappsourcecontrol" {
-  app_id   = azurerm_linux_web_app.azurewebapp.id
-  branch   = "main"
-  repo_url = var.github_repo_url
-}
+# # Deploy code from a public GitHub repository
+# resource "azurerm_app_service_source_control" "azurewebappsourcecontrol" {
+#   app_id   = azurerm_linux_web_app.azurewebapp.id
+#   branch   = "main"
+#   repo_url = var.github_repo_url
+# }

@@ -25,7 +25,7 @@ resource "azurerm_resource_group" "azureregistry" {
 }
 
 resource "azurerm_service_plan" "azureapp_service" {
-  name                = "var.app_service_plan_name"
+  name                = var.app_service_plan_name
   location            = azurerm_resource_group.azureregistry.location
   resource_group_name = azurerm_resource_group.azureregistry.name
   os_type             = "Linux"
@@ -34,7 +34,7 @@ resource "azurerm_service_plan" "azureapp_service" {
 
 # Create the web app, pass in the App Service Plan ID
 resource "azurerm_linux_web_app" "azurewebapp" {
-  name                = "var.app_service_name"
+  name                = var.app_service_name
   location            = azurerm_resource_group.azureregistry.location
   resource_group_name = azurerm_resource_group.azureregistry.name
   service_plan_id     = azurerm_service_plan.azureapp_service.id
@@ -53,7 +53,7 @@ resource "azurerm_linux_web_app" "azurewebapp" {
 
 
 resource "azurerm_mssql_server" "sqlserver" {
-  name                         = "var.sql_server_name"
+  name                         = var.sql_server_name
   resource_group_name          = azurerm_resource_group.azureregistry.name
   location                     = azurerm_resource_group.azureregistry.location
   version                      = "12.0"
